@@ -129,7 +129,7 @@ with tf.Session() as sess:
     for i in range(epochs):
         # shuffle data in each epoch
         trainData, trainTarget = shuffle(trainData, trainTarget)
-        
+
         for batch_num in range(num_batches_per_epoch):
             start_index = batch_num * batch_size
             end_index = min((batch_num + 1) * batch_size, data_size)
