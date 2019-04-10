@@ -27,9 +27,10 @@ def transfer(filename):
                 else: pass
     return [train_losses, valid_losses, test_losses, train_acc, valid_acc, test_acc]
 
+
 if __name__ == '__main__':
 
-    log_name = "mlp.log"
+    log_name = "cnn.log"
 
     train_losses, valid_losses, test_losses, train_acc, valid_acc, test_acc = \
     transfer(log_name)

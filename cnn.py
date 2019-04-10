@@ -6,6 +6,7 @@ import tensorflow as tf
 from data_helper import *
 import numpy as np
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import datetime
 
 # Data processing
 trainData, validData, testData, trainTarget, validTarget, testTarget = loadData()
@@ -128,6 +129,7 @@ with tf.Session() as sess:
     num_batches_per_epoch = data_size // batch_size
     if data_size % batch_size: num_batches_per_epoch += 1
 
+    print(datetime.datetime.now())
     # mini-batch
     for i in range(epochs):
         # shuffle data in each epoch
@@ -143,22 +145,24 @@ with tf.Session() as sess:
             }
             sess.run(train_op, feed_dict=feed_dict)
 
-        trainloss, trainacc = sess.run([loss_op, accuracy], feed_dict={
-            X: trainData,
-            Y: trainTarget,
-            keep_prob: 1.0
-        })
+        # trainloss, trainacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: trainData,
+        #     Y: trainTarget,
+        #     keep_prob: 1.0
+        # })
+        #
+        # validloss, validacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: validData,
+        #     Y: validTarget,
+        #     keep_prob: 1.0
+        # })
+        # testloss, testacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: testData,
+        #     Y: testTarget,
+        #     keep_prob: 1.0
+        # })
+        #
+        # print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}, trainacc: {}, validacc: {}, testacc: {}" \
+        #       .format(i, trainloss, validloss, testloss, trainacc, validacc, testacc))
 
-        validloss, validacc = sess.run([loss_op, accuracy], feed_dict={
-            X: validData,
-            Y: validTarget,
-            keep_prob: 1.0
-        })
-        testloss, testacc = sess.run([loss_op, accuracy], feed_dict={
-            X: testData,
-            Y: testTarget,
-            keep_prob: 1.0
-        })
-
-        print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}, trainacc: {}, validacc: {}, testacc: {}" \
-              .format(i, trainloss, validloss, testloss, trainacc, validacc, testacc))
+    print(datetime.datetime.now())

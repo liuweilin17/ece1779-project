@@ -1,6 +1,7 @@
 import tensorflow as tf
 from data_helper import *
 import sys
+import datetime
 
 # Data processing
 trainData, validData, testData, trainTarget, validTarget, testTarget = loadData()
@@ -64,7 +65,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
-    writer = tf.summary.FileWriter("mlp_output", sess.graph)
+    # writer = tf.summary.FileWriter("mlp_output", sess.graph)
     sess.run(init)
 
     # divide mini-batches
@@ -72,6 +73,7 @@ with tf.Session() as sess:
     num_batches_per_epoch = data_size // batch_size
     if data_size % batch_size: num_batches_per_epoch += 1
 
+    print(datetime.datetime.now())
     # mini-batch
     for i in range(n_epochs):
         # shuffle data in each epoch
@@ -86,20 +88,21 @@ with tf.Session() as sess:
             }
             sess.run(train_op, feed_dict=feed_dict)
 
-        trainloss, trainacc = sess.run([loss_op, accuracy], feed_dict={
-            X: trainData,
-            Y: trainTarget
-        })
-
-        validloss, validacc = sess.run([loss_op, accuracy], feed_dict={
-            X: validData,
-            Y: validTarget
-        })
-        testloss, testacc = sess.run([loss_op, accuracy], feed_dict={
-            X: testData,
-            Y: testTarget
-        })
-
-        print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}, trainacc: {}, validacc: {}, testacc: {}" \
-              .format(i, trainloss, validloss, testloss, trainacc, validacc, testacc))
+        # trainloss, trainacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: trainData,
+        #     Y: trainTarget
+        # })
+        #
+        # validloss, validacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: validData,
+        #     Y: validTarget
+        # })
+        # testloss, testacc = sess.run([loss_op, accuracy], feed_dict={
+        #     X: testData,
+        #     Y: testTarget
+        # })
+        #
+        # print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}, trainacc: {}, validacc: {}, testacc: {}" \
+        #       .format(i, trainloss, validloss, testloss, trainacc, validacc, testacc))
     # writer.close()
+    print(datetime.datetime.now())
