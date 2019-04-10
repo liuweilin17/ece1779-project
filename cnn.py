@@ -1,6 +1,7 @@
 from __future__ import division, print_function, absolute_import
 
 import os
+import sys
 import tensorflow as tf
 from data_helper import *
 import numpy as np
@@ -13,14 +14,14 @@ trainTarget, validTarget, testTarget = convertOneHot(trainTarget, validTarget, t
 
 # Training Parameters
 learning_rate = 0.00001 # for Adam
-batch_size = 32
+batch_size = 64
 epochs = 50
 
 # Network Parameters
 num_input = 784 # img shape: 28*28
 num_classes = 10 # 'A-J' classes
-dropout = 1 # probability to keep units
-L2_norm = 0 # L2 normalization
+dropout = 0.5 # probability to keep units
+L2_norm = 0.1 # L2 normalization
 
 # Graph input
 X = tf.placeholder(tf.float32, [None, num_input])
@@ -119,7 +120,9 @@ init = tf.global_variables_initializer()
 print('L2_norm: {}, Dropout: {}'.format(L2_norm, dropout))
 with tf.Session() as sess:
     sess.run(init)
-
+    # writer = tf.summary.FileWriter("cnn_output", sess.graph)
+    # writer.close()
+    # sys.exit(-1)
     # divide mini-batches
     data_size = trainData.shape[0]
     num_batches_per_epoch = data_size // batch_size
@@ -157,5 +160,5 @@ with tf.Session() as sess:
             keep_prob: 1.0
         })
 
-        print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}".format(i, trainloss, validloss, testloss))
-        print("epoch: {}, trainacc: {}, validacc: {}, testacc: {}".format(i, trainacc, validacc, testacc))
+        print("epoch: {}, trainloss: {}, validloss: {}, testloss: {}, trainacc: {}, validacc: {}, testacc: {}" \
+              .format(i, trainloss, validloss, testloss, trainacc, validacc, testacc))

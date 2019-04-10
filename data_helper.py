@@ -9,8 +9,8 @@ def loadData():
     with np.load("notMNIST.npz") as data:
         Data, Target = data["images"], data["labels"]
         Data, Target = shuffle(Data / 255.0, Target)
-        trainData, trainTarget = Data[:10000], Target[:10000]
-        validData, validTarget = Data[10000:16000], Target[10000:16000]
+        trainData, trainTarget = Data[:15000], Target[:15000]
+        validData, validTarget = Data[15000:16000], Target[15000:16000]
         testData, testTarget = Data[16000:], Target[16000:]
     return trainData, validData, testData, trainTarget, validTarget, testTarget
 
